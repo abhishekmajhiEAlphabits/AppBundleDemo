@@ -2,9 +2,11 @@ package com.example.appbundledemo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.play.core.splitinstall.SplitInstallManager;
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory;
@@ -32,11 +34,14 @@ public class MainActivity extends AppCompatActivity {
         splitInstallManager.startInstall(request).addOnSuccessListener(new OnSuccessListener<Integer>() {
             @Override
             public void onSuccess(Integer integer) {
+                Intent intent = new Intent().setClassName(getPackageName(), "com.example.feature1.FeatureOneActivity");
+                startActivity(intent);
                 Log.i("TAG", "Module download success");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(Exception e) {
+                Toast.makeText(getApplicationContext(), "Couldn't download feature1: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 Log.i("TAG", "Module download success");
             }
         });
